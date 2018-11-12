@@ -41,7 +41,8 @@ export const asyncRouterMap = [
         icon: 'zuowen',
         children: [
             { path: 'list', component: _import_('Article/list/index'), name: '文章列表' },
-            { path: 'add', component: _import_('Article/add/index'), name: '添加文章' }
+            { path: 'add', component: _import_('Article/add/index'), name: '添加文章' },
+            { path: 'tag', component: _import_('Article/tag/index'), name: '添加标签' }
         ]
     }
 ]
