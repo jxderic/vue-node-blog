@@ -7,11 +7,11 @@ import blog from './modules/blog'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-    modules: {
-        app,
-        blog
-    },
-    getters
+  modules: {
+    app,
+    blog
+  },
+  getters
 })
 
 export default store;

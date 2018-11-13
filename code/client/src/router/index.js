@@ -6,7 +6,7 @@ Vue.use(Router)
 const _import_ = file => () => import('views/' + file + '.vue')
 
 const router = new Router({
-    // mode: 'history',
+    mode: 'history',
     routes: [
         {
             path: '/',

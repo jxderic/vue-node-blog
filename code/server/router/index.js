@@ -29,6 +29,7 @@ export default app => {
   // client/文章请求
   router.get('/client_demo_api/blog/list', app.client.blog.list)
   router.get('/client_demo_api/blog/info', app.client.blog.info)
+  router.post('/client_demo_api/blog/addComment', app.client.blog.addComment)
 
   app.use(router.routes()).use(router.allowedMethods());
 }

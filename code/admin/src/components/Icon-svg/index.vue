@@ -6,17 +6,17 @@
 
 <script>
     export default {
-        name: "icon-svg",
-        props: {
-            name: {
-                type: String,
-                required: true
-            }
-        },
-        computed: {
-            iconName() {
-                return `#icon-${this.name}`;
-            }
+      name: 'icon-svg',
+      props: {
+        name: {
+          type: String,
+          required: true
         }
+      },
+      computed: {
+        iconName() {
+          return `#icon-${this.name}`;
+        }
+      }
     };
 </script>

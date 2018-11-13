@@ -104,3 +104,7 @@ input, textarea{
         transform: rotate(360deg);
     }
 }
+
+.reply-box .el-form--label-top .el-form-item__label {
+    padding: 0; 
+}

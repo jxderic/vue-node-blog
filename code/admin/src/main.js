@@ -11,7 +11,6 @@ import './styles/index.css'
 import './styles/index.less'
 import './font/iconfont'
 
-
 import * as filters from './filters'
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
@@ -22,9 +21,9 @@ Vue.use(customComponents)
 Vue.prototype.axios = axios
 
 new Vue({
-    el: '#app',
-    router,
-    store,
-    template: '<App/>',
-    components: { App }
+  el: '#app',
+  router,
+  store,
+  template: '<App/>',
+  components: { App }
 })

@@ -17,49 +17,49 @@
 
 <script>
     export default {
-        name: "login",
-        data() {
-            return {
-                loading: false,
-                msg: "",
-                loginInfo: {
-                    username: "",
-                    pwd: ""
-                }
-            };
-        },
-        methods: {
-            async login() {
-                this.loading = true;
-                if (!this.loginInfo.username) {
-                    this.msg = "请输入用户名";
-                } else if (!this.loginInfo.pwd) {
-                    this.msg = "请输入密码";
-                }
-                if (this.msg) {
-                    this.$message({
-                        message: this.msg,
-                        type: "warning"
-                    });
-                    this.msg = "";
-                    this.loading = false;
-                    return;
-                }   
-                try {
-                    await this.$store.dispatch('userLogin', this.loginInfo);
-                    this.$router.push('/home')
-                } catch (e) {
-                    console.log(e)
-                }           
-                
-                // console.log(data)
-                // if (data.code !== 0) {
-                //     this.$router.push('/home')
-                // }
-                this.loading = false;
-            },
-
+      name: 'login',
+      data() {
+        return {
+          loading: false,
+          msg: '',
+          loginInfo: {
+            username: '',
+            pwd: ''
+          }
+        };
+      },
+      methods: {
+        async login() {
+          this.loading = true;
+          if (!this.loginInfo.username) {
+            this.msg = '请输入用户名';
+          } else if (!this.loginInfo.pwd) {
+            this.msg = '请输入密码';
+          }
+          if (this.msg) {
+            this.$message({
+              message: this.msg,
+              type: 'warning'
+            });
+            this.msg = '';
+            this.loading = false;
+            return;
+          }
+          try {
+            await this.$store.dispatch('userLogin', this.loginInfo);
+            this.$router.push('/home')
+          } catch (e) {
+            console.log(e)
+          }
+    
+          // console.log(data)
+          // if (data.code !== 0) {
+          //     this.$router.push('/home')
+          // }
+          this.loading = false;
         }
+
+      }
     };
 </script>
 

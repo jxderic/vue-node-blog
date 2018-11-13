@@ -49,65 +49,63 @@
     import { mapGetters } from 'vuex'
     import Markdown from 'components/Markdown'
     export default {
-        components: { Markdown },
-        props: ['info'],
-        data() {
-            return {
-                dialogTableVisible: true,
-                loading: false,
-                rules: {
-                    type: [
-                        { required: true, message: '请选择至少选择一个文章类型', trigger: 'change', type: 'array' }
-                    ],
-                    title: [
-                        { required: true, message: '请填写文章标题', trigger: 'blur' }
-                    ],
-                    desc: [
-                        { required: true, message: '请填写文章描述', trigger: 'blur' }
-                    ],
-                    markdown: [
-                        { required: true, message: '请填写文章内容', trigger: 'blur' }
-                    ],
-                    releaseTime: [
-                        { required: true, message: '请选择文章的发布时间', trigger: 'change', type: 'date' }
-                    ]
-                }
-            }
-        },
-        methods: {
-            close() {
-                this.$emit('close')
-            },
-            submitForm(formName) {
-                this.loading = true;
-                this.$refs[formName].validate( async (valid) => {
-                    // console.log(this.info)
-                    if (valid) {
-                        try {
-                            this.info.html = this.info.markdown
-                            await this.$store.dispatch('updateBlog', this.info);
-                            this.loading = false;
-                            // this.$router.push('/music/list');
-                            this.close()
-                        }catch (e) {
-                            this.loading = false;
-                        }
-                        
-
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            }
-
-        },
-        computed: {
-            ...mapGetters([
-                'blogTypes',
-                'sources'
-            ])
+      components: { Markdown },
+      props: ['info'],
+      data() {
+        return {
+          dialogTableVisible: true,
+          loading: false,
+          rules: {
+            type: [
+              { required: true, message: '请选择至少选择一个文章类型', trigger: 'change', type: 'array' }
+            ],
+            title: [
+              { required: true, message: '请填写文章标题', trigger: 'blur' }
+            ],
+            desc: [
+              { required: true, message: '请填写文章描述', trigger: 'blur' }
+            ],
+            markdown: [
+              { required: true, message: '请填写文章内容', trigger: 'blur' }
+            ],
+            releaseTime: [
+              { required: true, message: '请选择文章的发布时间', trigger: 'change', type: 'date' }
+            ]
+          }
         }
+      },
+      methods: {
+        close() {
+          this.$emit('close')
+        },
+        submitForm(formName) {
+          this.loading = true;
+          this.$refs[formName].validate(async(valid) => {
+            // console.log(this.info)
+            if (valid) {
+              try {
+                this.info.html = this.info.markdown
+                await this.$store.dispatch('updateBlog', this.info);
+                this.loading = false;
+                // this.$router.push('/music/list');
+                this.close()
+              } catch (e) {
+                this.loading = false;
+              }
+            } else {
+              console.log('error submit!!');
+              return false;
+            }
+          });
+        }
+
+      },
+      computed: {
+        ...mapGetters([
+          'blogTypes',
+          'sources'
+        ])
+      }
     }
 </script>
 

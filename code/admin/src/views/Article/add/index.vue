@@ -50,78 +50,75 @@
     import { mapGetters } from 'vuex'
     import Markdown from 'components/Markdown'
     export default {
-        components: { Markdown },
-        data() {
-            return {
-                info: {
-                    type: ['JavaScript'],
-                    title: '',
-                    desc: '',
-                    html: '',
-                    markdown: '',
-                    level: 1,
-                    source: 1,
-                    github: '',
-                    isVisible: true,
-                    releaseTime: new Date()
-                },
-                loading: false,
-                rules: {
-                    type: [
-                        { required: true, message: '请选择至少选择一个文章类型', trigger: 'change', type: 'array' }
-                    ],
-                    title: [
-                        { required: true, message: '请填写文章标题', trigger: 'blur' }
-                    ],
-                    desc: [
-                        { required: true, message: '请填写文章描述', trigger: 'blur' }
-                    ],
-                    // markdown: [
-                    //     { required: true, message: '请填写文章内容', trigger: 'blur' }
-                    // ],
-                    isVisible: [
-                        { required: true, message: '请选择', trigger: 'change', type: 'boolean' }
-                    ],
-                    releaseTime: [
-                        { required: true, message: '请选择文章的发布时间', trigger: 'change', type: 'date' }
-                    ]
-                }
-            }
-        },
-        methods: {
-            submitForm(formName) {
-                this.loading = true;
-                if (!this.info.markdown) {
-                    this.$message.warn('请填写文章内容')
-                    return
-                }
-                this.$refs[formName].validate( async (valid) => {
-                    if (valid) {
-                        try{
-                            this.info.html = this.info.markdown
-                            await this.$store.dispatch('addBlog', this.info);
-                            this.loading = false
-                            this.$router.push('/article/list')
-                        }catch(e) {
-                            this.loading = false
-                        }
-                        
-
-                        
-                    } else {
-                        console.log('error submit!!');
-                        this.loading = false;
-                        return false;
-                    }
-                });
-            }
-        },
-        computed: {
-            ...mapGetters([
-                'blogTypes',
-                'sources'
-            ])
+      components: { Markdown },
+      data() {
+        return {
+          info: {
+            type: ['JavaScript'],
+            title: '',
+            desc: '',
+            html: '',
+            markdown: '',
+            level: 1,
+            source: 1,
+            github: '',
+            isVisible: true,
+            releaseTime: new Date()
+          },
+          loading: false,
+          rules: {
+            type: [
+              { required: true, message: '请选择至少选择一个文章类型', trigger: 'change', type: 'array' }
+            ],
+            title: [
+              { required: true, message: '请填写文章标题', trigger: 'blur' }
+            ],
+            desc: [
+              { required: true, message: '请填写文章描述', trigger: 'blur' }
+            ],
+            // markdown: [
+            //     { required: true, message: '请填写文章内容', trigger: 'blur' }
+            // ],
+            isVisible: [
+              { required: true, message: '请选择', trigger: 'change', type: 'boolean' }
+            ],
+            releaseTime: [
+              { required: true, message: '请选择文章的发布时间', trigger: 'change', type: 'date' }
+            ]
+          }
         }
+      },
+      methods: {
+        submitForm(formName) {
+          this.loading = true;
+          if (!this.info.markdown) {
+            this.$message.warn('请填写文章内容')
+            return
+          }
+          this.$refs[formName].validate(async(valid) => {
+            if (valid) {
+              try {
+                this.info.html = this.info.markdown
+                await this.$store.dispatch('addBlog', this.info);
+                this.loading = false
+                this.$router.push('/article/list')
+              } catch (e) {
+                this.loading = false
+              }
+            } else {
+              console.log('error submit!!');
+              this.loading = false;
+              return false;
+            }
+          });
+        }
+      },
+      computed: {
+        ...mapGetters([
+          'blogTypes',
+          'sources'
+        ])
+      }
     }
 </script>
 

@@ -10,14 +10,14 @@ import other from './modules/other'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-    modules: {
-        app,
-        user,
-        permission,
-        blog,
-        other
-    },
-    getters
+  modules: {
+    app,
+    user,
+    permission,
+    blog,
+    other
+  },
+  getters
 })
 
 export default store

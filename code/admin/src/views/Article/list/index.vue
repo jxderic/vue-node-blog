@@ -50,166 +50,165 @@
     import EditComponent from '../edit/index'
     import { blogFilters } from 'store/modules/classify'
     export default {
-        components: {
-            EditComponent
-        },
-        data() {
-            return {
-                keyword: '',
-                editShow: false,
-                blogInfo: {},
-                loading: false,
-                pageindex: 1,
-                pagesize: 10,
-                size_scoped: [10, 20, 30, 40],
-                headerOptions: [
-                    {
-                        label: '_id',
-                        prop: '_id',
-                        hidden: true,
-                        headerAlign: 'center',
-                        align: 'center',
-                        width: ''
-                    },
-                    {
-                        label: '类型',
-                        prop: 'type',
-                        hidden: false,
-                        headerAlign: 'center',
-                        align: 'center',
-                        width: '',
-                        filters: blogFilters                   
-                    },
-                    {
-                        label: '标题',
-                        prop: 'title',
-                        hidden: false,
-                        headerAlign: 'center',
-                        align: 'center',
-                        width: '',
-                        sort: true
-                    },
-                    {
-                        label: '描述',
-                        prop: 'desc',
-                        hidden: false,
-                        headerAlign: 'center',
-                        align: 'center',
-                        width: ''
-                    },
-                    {
-                        label: '来源',
-                        prop: 'source',
-                        hidden: false,
-                        headerAlign: 'center',
-                        align: 'center',
-                        width: ''
-                    },
-                    {
-                        label: '级别',
-                        prop: 'level',
-                        hidden: false,
-                        headerAlign: 'center',
-                        align: 'center',
-                        width: ''
-                    },
-                    {
-                        label: '发布时间',
-                        prop: 'releaseTime',
-                        hidden: false,
-                        headerAlign: 'center',
-                        align: 'center',
-                        width: '',
-                        sort: true
-                    },
-                    {
-                        label: '是否可见',
-                        prop: 'isVisible',
-                        hidden: false,
-                        headerAlign: 'center',
-                        align: 'center',
-                        minWidth: 120
-                    }
-                ],
-                multipleSelection: []
+      components: {
+        EditComponent
+      },
+      data() {
+        return {
+          keyword: '',
+          editShow: false,
+          blogInfo: {},
+          loading: false,
+          pageindex: 1,
+          pagesize: 10,
+          size_scoped: [10, 20, 30, 40],
+          headerOptions: [
+            {
+              label: '_id',
+              prop: '_id',
+              hidden: true,
+              headerAlign: 'center',
+              align: 'center',
+              width: ''
+            },
+            {
+              label: '类型',
+              prop: 'type',
+              hidden: false,
+              headerAlign: 'center',
+              align: 'center',
+              width: '',
+              filters: blogFilters
+            },
+            {
+              label: '标题',
+              prop: 'title',
+              hidden: false,
+              headerAlign: 'center',
+              align: 'center',
+              width: '',
+              sort: true
+            },
+            {
+              label: '描述',
+              prop: 'desc',
+              hidden: false,
+              headerAlign: 'center',
+              align: 'center',
+              width: ''
+            },
+            {
+              label: '来源',
+              prop: 'source',
+              hidden: false,
+              headerAlign: 'center',
+              align: 'center',
+              width: ''
+            },
+            {
+              label: '级别',
+              prop: 'level',
+              hidden: false,
+              headerAlign: 'center',
+              align: 'center',
+              width: ''
+            },
+            {
+              label: '发布时间',
+              prop: 'releaseTime',
+              hidden: false,
+              headerAlign: 'center',
+              align: 'center',
+              width: '',
+              sort: true
+            },
+            {
+              label: '是否可见',
+              prop: 'isVisible',
+              hidden: false,
+              headerAlign: 'center',
+              align: 'center',
+              minWidth: 120
             }
-        },
-        mounted () {
-            this.getBlogList()
-        },
-
-        methods: {
-            increment (index) {
-                return index+1+((this.pageindex-1)*this.pagesize)
-            },
-            close () {
-                this.editShow = false;
-                this.getBlogList()
-            },
-            handleSizeChange(val) {
-                // console.log(`每页 ${val} 条`);
-                this.pagesize = val;
-                this.getBlogList()
-            },
-            handleCurrentChange(val) {
-                // console.log(`当前页: ${val}`);
-                this.pageindex = val;
-                this.getBlogList()
-            },
-            async getBlogList () {
-                this.loading = true;
-                try {
-                    await this.$store.dispatch('getBlogList', {
-                        keyword: this.keyword,
-                        pageindex: this.pageindex,
-                        pagesize: this.pagesize
-                    })
-                    this.loading = false;
-                }catch(e) {
-                    this.loading = false;
-                }
-            },
-            del (scope) {
-                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-                      confirmButtonText: '确定',
-                      cancelButtonText: '取消',
-                      type: 'warning',
-                      center: true
-                    }).then(async () => {
-                        try {
-                    await this.$store.dispatch('delBlog', scope.row._id)
-                    this.blogList.splice(scope.$index, 1)
-                }catch(e) {
-
-                }
-                      this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                      });
-                    }).catch(() => {
-                      this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                      });
-                    });
-                
-            },
-            edit (scope) {
-                console.log(scope)
-                this.editShow = true;
-                scope.row.releaseTime = new Date(scope.row.releaseTime)
-                this.blogInfo = scope.row
-            },
-            filterTag(value, row) {
-                return row.type.some( v => v === value)
-            }
-        },
-        computed: {
-            ...mapGetters([
-                'blogList',
-                'blogTotal'
-            ])
+          ],
+          multipleSelection: []
         }
+      },
+      mounted() {
+        this.getBlogList()
+      },
+
+      methods: {
+        increment(index) {
+          return index + 1 + ((this.pageindex - 1) * this.pagesize)
+        },
+        close() {
+          this.editShow = false;
+          this.getBlogList()
+        },
+        handleSizeChange(val) {
+          // console.log(`每页 ${val} 条`);
+          this.pagesize = val;
+          this.getBlogList()
+        },
+        handleCurrentChange(val) {
+          // console.log(`当前页: ${val}`);
+          this.pageindex = val;
+          this.getBlogList()
+        },
+        async getBlogList() {
+          this.loading = true;
+          try {
+            await this.$store.dispatch('getBlogList', {
+              keyword: this.keyword,
+              pageindex: this.pageindex,
+              pagesize: this.pagesize
+            })
+            this.loading = false;
+          } catch(e) {
+            this.loading = false;
+          }
+        },
+        del(scope) {
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+            center: true
+          }).then(async() => {
+            try {
+              await this.$store.dispatch('delBlog', scope.row._id)
+              this.blogList.splice(scope.$index, 1)
+            } catch(e) {
+
+            }
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          });
+        },
+        edit(scope) {
+          console.log(scope)
+          this.editShow = true;
+          scope.row.releaseTime = new Date(scope.row.releaseTime)
+          this.blogInfo = scope.row
+        },
+        filterTag(value, row) {
+          return row.type.some(v => v === value)
+        }
+      },
+      computed: {
+        ...mapGetters([
+          'blogList',
+          'blogTotal'
+        ])
+      }
     }
 </script>
 
