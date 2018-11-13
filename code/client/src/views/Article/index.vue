@@ -17,55 +17,45 @@
                 </div>
             </div>
         </div>
-        <div class="comment">
-            <comment-list :comments="blogInfo.comments"></comment-list>
-            <comment-input v-if="!replyNum"></comment-input>
-        </div>
     </article>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import CommentInput from './components/CommentInput'
-import CommentList from './components/CommentList'
 export default {
-  data() {
-    return {
-      blogHtml: ''
+    data () {
+        return {
+            blogHtml: ''
+        }
+    },
+    async mounted () {
+        await this.$store.dispatch('getBlogInfo', this.$route.params.id)
+        this.blogHtml = this.blogInfo.html.replace(/<a /gi, `<a target='_blank'`)
+        if (this.$route.query.type === 'comment') {
+            setTimeout( () => {
+                this.goAnchor()
+            },0)
+        }
+        
+    },
+    methods: {
+        goAnchor () {
+            let oComment = document.querySelector('#comment');
+            let scrollTop = oComment.offsetTop;
+            document.documentElement.scrollTop = scrollTop;
+            document.body.scrollTop = scrollTop;        
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'blogInfo'
+        ])
+    },
+    watch: {
+        blogInfo () {
+            document.title = this.blogInfo.title
+        }
     }
-  },
-  components: {
-    CommentInput,
-    CommentList
-  },
-  async mounted() {
-    await this.$store.dispatch('getBlogInfo', this.$route.params.id)
-    this.blogHtml = this.blogInfo.html.replace(/<a /gi, `<a target='_blank'`)
-    if (this.$route.query.type === 'comment') {
-      setTimeout(() => {
-        this.goAnchor()
-      }, 0)
-    }
-  },
-  methods: {
-    goAnchor() {
-      const oComment = document.querySelector('#comment');
-      const scrollTop = oComment.offsetTop;
-      document.documentElement.scrollTop = scrollTop;
-      document.body.scrollTop = scrollTop;
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'blogInfo',
-      'replyNum'
-    ])
-  },
-  watch: {
-    blogInfo() {
-      document.title = this.blogInfo.title
-    }
-  }
 }
 </script>
 
@@ -136,12 +126,6 @@ export default {
 
             
         }
-    }
-    .comment {
-        width: 3rem;
-        max-width: 800px;
-        margin: 0 auto;
-        padding-bottom: 30px;
     }
 </style>
 

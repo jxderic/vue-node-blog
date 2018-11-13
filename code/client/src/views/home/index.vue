@@ -9,6 +9,9 @@
                 <BlogComponent></BlogComponent>
             </router-view>
         </div>
+        
+
+        
     </div>
 </template>
 <script>

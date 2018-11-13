@@ -1,12 +1,12 @@
 <template>
     <section class="blog-wrapper">
         <ul v-if="blogList.length > 0">
-            <li class="article" v-for="(v, index) in blogList" :key="index" :style="{'animation-delay': index%5*0.2+'s'}" @click="$router.push(`/article/${v._id}`)">
+            <li class="article" v-for="(v, index) in blogList" :style="{'animation-delay': index%5*0.2+'s'}" @click="$router.push(`/article/${v._id}`)">
                 <Github class="github mouse-pointer" background="rgba(186, 164, 119, 0.99)" :link="v.github" v-if="v.github"></Github>
                 <time>{{v.createTime | parseTime('{y}-{m}-{d}')}}</time>
                 <h2 class="name">{{v.title}}</h2>
                 <div class="tags">
-                    <Tag v-for="tag in v.type" :key="tag" :text="tag" :path="tag"></Tag>
+                    <Tag v-for="tag in v.type" :text="tag" :path="tag"></Tag>
                 </div>
                 <div class="desc">{{v.desc}}</div>
                 <div class="source">
@@ -21,53 +21,51 @@
 <script>
     import { mapGetters } from 'vuex'
     export default {
-      data() {
-        return {
-          pageindex: 1
-        }
-      },
-      created() {
-        this.getBlogData()
-      },
-      mounted() {
-        window.addEventListener('scroll', () => {
-          const distance = document.documentElement.scrollTop || document.body.scrollTop;
-    
-          const winH = document.documentElement.clientHeight || document.body.clientHeight;
-    
-          const scrollH = document.documentElement.scrollHeight || document.body.scrollHeight;
-    
-          if (distance + winH >= scrollH) {
-            if (this.blogLoadingBol) {
-              this.pageindex++;
-              this.$store.dispatch('getBlogList', {
-                type: this.$route.params.classify,
-                pageindex: this.pageindex
-              })
+        data () {
+            return {
+                pageindex: 1
             }
-          }
-        })
-      },
-      methods: {
-        getBlogData() {
-          this.$store.dispatch('getBlogList', {
-            type: this.$route.params.classify,
-            pageindex: this.pageindex
-          })
+        },
+        created () {
+            this.getBlogData()
+        },
+        mounted () {
+            window.addEventListener('scroll', () => {
+                let distance = document.documentElement.scrollTop || document.body.scrollTop,
+                    winH = document.documentElement.clientHeight || document.body.clientHeight,
+                    scrollH = document.documentElement.scrollHeight || document.body.scrollHeight;
+                
+                if (distance+winH >= scrollH) {
+                    if (this.blogLoadingBol) {
+                        this.pageindex ++;
+                        this.$store.dispatch('getBlogList', {
+                            type: this.$route.params.classify,
+                            pageindex: this.pageindex
+                        })
+                    }
+                }
+            })
+        },
+        methods: {
+            getBlogData () {
+                this.$store.dispatch('getBlogList', {
+                    type: this.$route.params.classify,
+                    pageindex: this.pageindex
+                })
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'blogList',
+                'blogLoadingMore',
+                'blogLoadingBol'
+            ])
+        },
+        watch: {
+            $route (to, from) {
+                this.getBlogData()
+            }
         }
-      },
-      computed: {
-        ...mapGetters([
-          'blogList',
-          'blogLoadingMore',
-          'blogLoadingBol'
-        ])
-      },
-      watch: {
-        $route(to, from) {
-          this.getBlogData()
-        }
-      }
     }
 </script>
 <style lang="less" scoped>
